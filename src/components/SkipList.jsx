@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Truck, Calendar, CheckCircle, ArrowRight, AlertTriangle } from 'lucide-react';
 
 const LoadingScreen = () => (
-  <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center text-white">
+  <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center text-white">
     <motion.div
       className="text-indigo-500 mb-4"
       animate={{ rotate: 360 }}
@@ -25,7 +25,7 @@ const ConfirmationPanel = ({ selectedSkip }) => (
     exit={{ opacity: 0, y: 100 }}
     className="fixed bottom-4 left-4 right-4 z-50 max-w-2xl mx-auto"
   >
-    <div className="bg-gray-800/95 backdrop-blur-xl border border-indigo-500/50 rounded-xl p-4 lg:p-6 shadow-2xl">
+    <div className="bg-gray-900/95 backdrop-blur-xl border border-indigo-500/50 rounded-xl p-4 lg:p-6 shadow-2xl">
       <div className="flex flex-col lg:flex-row items-center gap-4">
         <CheckCircle size={24} className="text-emerald-400 flex-shrink-0" />
         <div className="flex-1 text-center lg:text-left">
@@ -74,7 +74,7 @@ const SkipSelection = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 lg:p-8">
+    <div className="min-h-screen bg-gray-950 text-white p-4 lg:p-8">
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
@@ -99,6 +99,7 @@ const SkipSelection = () => {
         {skips.map((skip, index) => (
           <motion.div
             key={skip.id}
+            className="h-full" // Make all cards equal height
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}

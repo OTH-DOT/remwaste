@@ -12,7 +12,7 @@ const SkipCard = ({ skip, onSelect, selected }) => {
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -8, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className={`relative overflow-hidden backdrop-blur-sm border-2 rounded-2xl p-6 cursor-pointer transition-all duration-300 ${
+      className={`relative flex flex-col justify-between h-full  overflow-hidden backdrop-blur-sm border-2 rounded-2xl p-6 pb-12 cursor-pointer transition-all duration-300 ${
         selected 
           ? 'border-indigo-500 bg-indigo-500/10 shadow-2xl shadow-indigo-500/25'
           : 'border-gray-700/50 bg-gray-800/40 hover:border-indigo-400/50 hover:bg-gray-800/60'
