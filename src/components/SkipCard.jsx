@@ -1,0 +1,108 @@
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Truck, Calendar, CheckCircle, ArrowRight, AlertTriangle } from 'lucide-react';
+
+const SkipCard = ({ skip, onSelect, selected }) => {
+  const totalPrice = skip.price_before_vat + (skip.price_before_vat * skip.vat / 100);
+  
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -8, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className={`relative overflow-hidden backdrop-blur-sm border-2 rounded-2xl p-6 cursor-pointer transition-all duration-300 ${
+        selected 
+          ? 'border-indigo-500 bg-indigo-500/10 shadow-2xl shadow-indigo-500/25'
+          : 'border-gray-700/50 bg-gray-800/40 hover:border-indigo-400/50 hover:bg-gray-800/60'
+      }`}
+      onClick={() => onSelect(skip)}
+    >
+      {/* Header with size badge and warning */}
+      <div className="flex justify-between items-center mb-6">
+        <div className="bg-indigo-600 text-white px-3 py-1.5 rounded-full text-sm font-semibold">
+          {skip.size} Yards
+        </div>
+        {!skip.allowed_on_road && (
+          <div className="text-amber-400 bg-amber-400/20 p-2 rounded-lg">
+            <AlertTriangle size={16} />
+          </div>
+        )}
+      </div>
+      
+      {/* Skip image */}
+      <div className="text-center mb-6">
+        <div className="relative w-full  mx-auto rounded-xl overflow-hidden shadow-lg">
+          <img 
+            src={skip.image} 
+            alt={`${skip.size} Yard Skip`}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+      
+      {/* Skip details */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-bold text-white">{skip.size} Yard Skip</h3>
+        
+        <div className="flex items-center gap-2 text-gray-300 text-sm">
+          <Calendar size={16} />
+          <span>{skip.hire_period_days} day hire period</span>
+        </div>
+        
+        {/* Features */}
+        <div className="flex flex-wrap gap-2">
+          {skip.allows_heavy_waste && (
+            <span className="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-xs font-medium">
+              Heavy Waste ✓
+            </span>
+          )}
+          {skip.allowed_on_road && (
+            <span className="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-xs font-medium">
+              Road Placement ✓
+            </span>
+          )}
+        </div>
+        
+        {/* Price */}
+        <div className="pt-2">
+          <div className="text-2xl font-bold text-white">£{Math.round(totalPrice)}</div>
+          <div className="text-sm text-gray-400">Inc. VAT</div>
+        </div>
+      </div>
+      
+      {/* Select button */}
+      <motion.button
+        className={`w-full mt-6 py-3 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 ${
+          selected
+            ? 'bg-indigo-600 text-white shadow-lg'
+            : 'bg-indigo-600 text-white hover:bg-indigo-700'
+        }`}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        {selected ? (
+          <>
+            <CheckCircle size={18} />
+            Selected
+          </>
+        ) : (
+          <>
+            Select This Skip
+            <ArrowRight size={18} />
+          </>
+        )}
+      </motion.button>
+      
+      {/* Road restriction notice */}
+      {!skip.allowed_on_road && (
+        <div className="absolute bottom-0 left-0 right-0 bg-amber-500/20 text-amber-300 px-3 py-2 text-center text-xs font-medium rounded-b-2xl">
+          ⚠️ Not Allowed On The Road
+        </div>
+      )}
+    </motion.div>
+  );
+};
+
+export default SkipCard;
