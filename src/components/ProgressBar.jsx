@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MapPin, Trash2, Truck, Shield, Calendar, CreditCard, ChevronLeft, ChevronRight } from 'lucide-react';
-import WasteType from './WasteType';
-import PermitCheck from './PermitCheck';
 import SkipSelection from './SkipList';
 
 const ProgressBar = ({ currentStep = 1, onStepClick }) => {
@@ -167,14 +165,6 @@ const ProgressBar = ({ currentStep = 1, onStepClick }) => {
         })}
       </div>
       </div>
-
-        {/* Gradient Overlays for Visual Effect */}
-        {/* <div className={`absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-950 to-transparent pointer-events-none lg:hidden transition-opacity duration-300 ${
-          canScrollLeft ? 'opacity-100' : 'opacity-0'
-        }`} />
-        <div className={`absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-950 to-transparent pointer-events-none lg:hidden transition-opacity duration-300 ${
-          canScrollRight ? 'opacity-100' : 'opacity-0'
-        }`} /> */}
       </div>
 
     </div>
