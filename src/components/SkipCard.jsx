@@ -22,7 +22,7 @@ const SkipCard = ({ skip, onSelect, selected }) => {
         ]
       : ''
   }}
-  whileHover={{ y: -70, rotateX: 1 }}
+  whileHover={{ y: -50, rotateX: 0.5 }}
   transition={{
     type: 'spring',
     stiffness: 100,

@@ -38,7 +38,7 @@ const ConfirmationPanel = ({onContinue, selectedSkip }) => (
         </div>
         <motion.button
           onClick={() => onContinue && onContinue()}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition-colors duration-300 w-full lg:w-auto"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg max-md:justify-center font-semibold flex items-center gap-2 transition-colors duration-300 w-full lg:w-auto"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
