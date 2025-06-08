@@ -1,46 +1,92 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Truck, Calendar, CheckCircle, ArrowRight, AlertTriangle } from 'lucide-react';
+import '../index.css'
 
 const SkipCard = ({ skip, onSelect, selected }) => {
   const totalPrice = skip.price_before_vat + (skip.price_before_vat * skip.vat / 100);
   
   return (
+    <div style={{ perspective: '20px' }}>
     <motion.div
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={`relative flex flex-col justify-between h-full  overflow-hidden backdrop-blur-sm border-2 rounded-2xl p-6 pb-12 cursor-pointer transition-all duration-300 ${
-        selected 
-          ? 'border-indigo-500 bg-indigo-500/10 shadow-2xl shadow-indigo-500/25'
-          : 'border-gray-700/50 bg-gray-800/40 hover:border-indigo-400/50 hover:bg-gray-800/60'
-      }`}
-      onClick={() => onSelect(skip)}
-    >
-      {/* Header with size badge and warning */}
-      <div className="flex justify-between items-center mb-6">
-        <div className="bg-indigo-600 text-white px-3 py-1.5 rounded-full text-sm font-semibold">
-          {skip.size} Yards
-        </div>
-        {!skip.allowed_on_road && (
-          <div className="text-amber-400 bg-amber-400/20 p-2 rounded-lg">
-            <AlertTriangle size={16} />
-          </div>
-        )}
+  layout
+  initial={{ opacity: 0, y: 20 }}
+  animate={{
+    opacity: 1,
+    y: 0,
+    boxShadow: selected
+      ? [
+          '0 0 10px 4px rgba(99,102,241,0.3)',
+          '0 0 25px 12px rgba(99,102,241,0.6)',
+          '0 0 10px 4px rgba(99,102,241,0.3)'
+        ]
+      : ''
+  }}
+  whileHover={{ y: -70, rotateX: 1 }}
+  transition={{
+    type: 'spring',
+    stiffness: 100,
+    boxShadow: {
+      duration: 2,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    },
+  }}
+  className={`relative box flex flex-col justify-between h-full hover:z-50 overflow-hidden backdrop-blur-sm border-2 rounded-2xl p-6 pb-12 cursor-pointer transition-all duration-300 group ${
+    selected 
+      ? 'border-indigo-500 bg-indigo-500/10'
+      : 'border-gray-700/50 bg-gray-900/40 hover:border-indigo-400/50 hover:bg-gray-800/60'
+  }`}
+  onClick={() => onSelect(skip)}
+>
+
+  {/* Header with size badge and warning */}
+  <div className="flex justify-between items-center mb-6">
+    <div className="bg-indigo-600 text-white px-3 py-1.5 rounded-full text-sm font-semibold">
+      {skip.size} Yards
+    </div>
+    {!skip.allowed_on_road && (
+      <div className="text-amber-400 bg-amber-400/20 p-2 rounded-lg">
+        <AlertTriangle size={16} />
       </div>
+    )}
+  </div>
+  
+  {/* Skip image */}
+  <div className="text-center mb-6">
+    <div className="relative w-full mx-auto rounded-xl overflow-hidden group-hover:overflow-visible shadow-lg bg-gray-700/50">
+      {/* Original image - hidden on hover */}
+      {skip.image ? (
+        <img 
+          src={skip.image} 
+          alt={`${skip.size} Yard Skip`}
+          className="w-full h-full object-cover group-hover:opacity-0 transition-opacity duration-300"
+          loading="lazy"
+        />
+      ) : (
+        <div className="h-32 flex items-center justify-center text-gray-400 group-hover:opacity-0 transition-opacity duration-300">
+          <Truck size={32} />
+        </div>
+      )}
       
-      {/* Skip image */}
-      <div className="text-center mb-6">
-        <div className="relative w-full  mx-auto rounded-xl overflow-hidden shadow-lg">
-          <img 
-            src={skip.image} 
-            alt={`${skip.size} Yard Skip`}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
+      {/* Hover image - shown only on hover */}
+      <motion.img 
+        src="/skip.png" 
+        alt="Skip Hover Image"
+        className="absolute inset-0 w-full h-full object-cover scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        loading="lazy"
+        animate={{
+          y: [0, -10, 0]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      
+    </div>
+  </div>
       
       {/* Skip details */}
       <div className="space-y-4">
@@ -102,6 +148,7 @@ const SkipCard = ({ skip, onSelect, selected }) => {
         </div>
       )}
     </motion.div>
+    </div>
   );
 };
 
