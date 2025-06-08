@@ -32,7 +32,7 @@ const SkipCard = ({ skip, onSelect, selected }) => {
       ease: 'easeInOut',
     },
   }}
-  className={`relative box flex flex-col justify-between h-full hover:z-50 overflow-hidden backdrop-blur-sm border-2 rounded-2xl p-6 pb-12 cursor-pointer transition-all duration-300 group ${
+  className={`relative box flex flex-col justify-between h-full flex-1 hover:z-50 overflow-hidden backdrop-blur-sm border-2 rounded-2xl p-6 pb-12 cursor-pointer transition-all duration-300 group ${
     selected 
       ? 'border-indigo-500 bg-indigo-500/10'
       : 'border-gray-700/50 bg-gray-900/40 hover:border-indigo-400/50 hover:bg-gray-800/60'

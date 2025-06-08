@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MapPin, Trash2, SkipForward, Shield, Calendar, CreditCard, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Trash2, Truck, Shield, Calendar, CreditCard, ChevronLeft, ChevronRight } from 'lucide-react';
 import WasteType from './WasteType';
 import PermitCheck from './PermitCheck';
 import SkipSelection from './SkipList';
@@ -8,7 +8,7 @@ const ProgressBar = ({ currentStep = 1, onStepClick }) => {
   const steps = [
     { id: 1, label: 'Postcode', icon: MapPin, color: 'bg-green-500' },       // eco, start
     { id: 2, label: 'Waste Type', icon: Trash2, color: 'bg-lime-500' },      // active, waste
-    { id: 3, label: 'Select Skip', icon: SkipForward, color: 'bg-blue-500' },// info, selection
+    { id: 3, label: 'Select Skip', icon: Truck, color: 'bg-blue-500' },// info, selection
     { id: 4, label: 'Permit Check', icon: Shield, color: 'bg-yellow-500' },  // caution, alert
     { id: 5, label: 'Choose Date', icon: Calendar, color: 'bg-cyan-500' },   // calm, planning
     { id: 6, label: 'Payment', icon: CreditCard, color: 'bg-indigo-500' },   // trust, secure
@@ -78,7 +78,7 @@ const ProgressBar = ({ currentStep = 1, onStepClick }) => {
         {/* Left Arrow */}
         <button
           onClick={() => scroll('left')}
-          className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center transition-all duration-300 hover:bg-gray-700 hover:border-gray-600 lg:hidden ${
+          className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center transition-all duration-300 hover:bg-gray-700 hover:border-gray-600 xl:hidden ${
             canScrollLeft 
               ? 'opacity-100 pointer-events-auto shadow-lg' 
               : 'opacity-0 pointer-events-none'
@@ -90,7 +90,7 @@ const ProgressBar = ({ currentStep = 1, onStepClick }) => {
         {/* Right Arrow */}
         <button
           onClick={() => scroll('right')}
-          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center transition-all duration-300 hover:bg-gray-700 hover:border-gray-600 lg:hidden ${
+          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center transition-all duration-300 hover:bg-gray-700 hover:border-gray-600 xl:hidden ${
             canScrollRight 
               ? 'opacity-100 pointer-events-auto shadow-lg' 
               : 'opacity-0 pointer-events-none'
@@ -101,13 +101,13 @@ const ProgressBar = ({ currentStep = 1, onStepClick }) => {
         {/* Scrollable Container */}
         <div 
           ref={scrollContainerRef}
-          className="overflow-x-auto scrollbar-hide lg:overflow-visible"
+          className="overflow-x-auto scrollbar-hide xl:overflow-visible"
           style={{ 
             scrollbarWidth: 'none',
             msOverflowStyle: 'none'
           }}
         >
-        <div className="flex items-center justify-between h-[80px] min-w-max lg:min-w-0 px-2 lg:px-0">
+        <div className="flex items-center xl:justify-center  justify-between h-[80px] min-w-max lg:min-w-0 px-2 lg:px-0">
           {steps.map((step, index) => {
           const status = getStepStatus(step.id);
           const Icon = step.icon;
@@ -138,7 +138,7 @@ const ProgressBar = ({ currentStep = 1, onStepClick }) => {
                   <Icon size={20} />
                 </div>
                 <span
-                  className={`text-sm font-medium transition-colors duration-300 ${
+                  className={`text-sm font-medium whitespace-nowrap transition-colors duration-300 ${
                     status === 'completed'
                       ? 'text-white'
                       : status === 'current'
@@ -195,30 +195,104 @@ const Demo = () => {
     }
   };
 
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  
+
   const renderStepContent = () => {
     switch(currentStep) {
       case 1:
         return (
-          <div className="min-h-screen bg-gray-950 text-white p-8 flex items-center justify-center">
-            1
+          <div className="min-h-full bg-gray-950 text-white p-8 flex flex-col items-center justify-center">
+            postcode
+            <div className="max-w-6xl mx-auto mt-8 flex justify-center space-x-4">
+              <button
+                onClick={() => handleContinue()}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              >
+                continue
+              </button>
+            </div>
           </div>
         );
       case 2:
-        return <WasteType />
+        return (
+          <div className="min-h-full bg-gray-950 text-white p-8 flex flex-col items-center justify-center">
+            Waste Type
+            <div className="max-w-6xl mx-auto mt-8 flex justify-center space-x-4">
+              <button
+                onClick={() => handleBack()}
+                className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                back
+              </button>
+              <button
+                onClick={() => handleContinue()}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              >
+                continue
+              </button>
+            </div>
+          </div>
+        );
       case 3:
-        return <SkipSelection onContinue={handleContinue} />;
+        return <SkipSelection onBack={handleBack} onContinue={handleContinue} />;
       case 4:
-        return <PermitCheck />
+        return (
+          <div className="min-h-full bg-gray-950 text-white p-8 flex flex-col items-center justify-center">
+            Permit Check
+            <div className="max-w-6xl mx-auto mt-8 flex justify-center space-x-4">
+              <button
+                onClick={() => handleBack()}
+                className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                back
+              </button>
+              <button
+                onClick={() => handleContinue()}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              >
+                continue
+              </button>
+            </div>
+          </div>
+        );
       case 5:
         return (
-          <div className="min-h-screen bg-gray-950 text-white p-8 flex items-center justify-center">
-            5
+          <div className="min-h-full bg-gray-950 text-white p-8 flex flex-col items-center justify-center">
+            Choose Date
+            <div className="max-w-6xl mx-auto mt-8 flex justify-center space-x-4">
+              <button
+                onClick={() => handleBack()}
+                className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                back
+              </button>
+              <button
+                onClick={() => handleContinue()}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              >
+                continue
+              </button>
+            </div>
           </div>
         );
       case 6:
         return (
-          <div className="min-h-screen bg-gray-950 text-white p-8 flex items-center justify-center">
-            6
+          <div className="min-h-full bg-gray-950 text-white p-8 flex flex-col items-center justify-center">
+            Payment
+            <div className="max-w-6xl mx-auto mt-8 flex justify-center space-x-4">
+              <button
+                onClick={() => handleBack()}
+                className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                back
+              </button>
+            </div>
           </div>
         );
       default:
