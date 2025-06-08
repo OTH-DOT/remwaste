@@ -18,12 +18,12 @@ const LoadingScreen = () => (
 );
 
 // Confirmation Panel Component
-const ConfirmationPanel = ({ selectedSkip }) => (
+const ConfirmationPanel = ({onContinue, selectedSkip }) => (
   <motion.div
     initial={{ opacity: 0, y: 100 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: 100 }}
-    className="fixed bottom-4 left-4 right-4 z-50 max-w-2xl mx-auto"
+    className="fixed bottom-4 left-4 right-4 z-50 max-w-4xl mx-auto"
   >
     <div className="bg-gray-900/95 backdrop-blur-xl border border-indigo-500/50 rounded-xl p-4 lg:p-6 shadow-2xl">
       <div className="flex flex-col lg:flex-row items-center gap-4">
@@ -37,6 +37,7 @@ const ConfirmationPanel = ({ selectedSkip }) => (
           </p>
         </div>
         <motion.button
+          onClick={() => onContinue && onContinue()}
           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition-colors duration-300 w-full lg:w-auto"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -45,12 +46,18 @@ const ConfirmationPanel = ({ selectedSkip }) => (
           <ArrowRight size={18} />
         </motion.button>
       </div>
+      
+      <div className="border-t border-gray-700/50 mt-6 pt-4">
+        <p className="text-xs text-gray-500 text-center leading-relaxed">
+          Imagery and information shown throughout this website may not reflect the exact shape or size specification. Colours may vary. Options and/or accessories may be featured at additional cost.
+        </p>
+      </div>
     </div>
   </motion.div>
 );
 
 // Main Component
-const SkipSelection = () => {
+const SkipSelection = ({onContinue}) => {
   const [skips, setSkips] = useState([]);
   const [selectedSkip, setSelectedSkip] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -74,7 +81,7 @@ const SkipSelection = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-4 lg:p-8">
+    <div className="min-h-screen bg-gray-950 text-white p-4 lg:pb-[140px] lg:p-12">
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
@@ -115,7 +122,7 @@ const SkipSelection = () => {
 
       {/* Confirmation Panel */}
       <AnimatePresence>
-        {selectedSkip && <ConfirmationPanel selectedSkip={selectedSkip} />}
+        {selectedSkip && <ConfirmationPanel onContinue={onContinue} selectedSkip={selectedSkip} />}
       </AnimatePresence>
     </div>
   );
